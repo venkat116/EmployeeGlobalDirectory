@@ -170,18 +170,20 @@ func (t *SimpleChaincode) readProduct(stub shim.ChaincodeStubInterface, args []s
 		fmt.Println("Error retrieving " + key)
 		return nil, errors.New("Error retrieving " + key)
 	}
+	/*
 	product := Product{}
 	err = json.Unmarshal(bytes, &product)
 	if err != nil {
 		fmt.Println("Error Unmarshaling customerBytes")
 		return nil, errors.New("Error Unmarshaling customerBytes")
 	}
+	
 	bytes, err = json.Marshal(product)
 	if err != nil {
 		fmt.Println("Error marshaling customer")
 		return nil, errors.New("Error marshaling customer")
 	}
-
+*/
 	fmt.Println(bytes)
 	return bytes, nil
 }
