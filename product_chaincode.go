@@ -29,7 +29,7 @@ type Product struct {
 	Name   string  `json:"name"`
 	Amount float64 `json:"amount"`
 	Owner string  `json:"owner"`
-	ProductId string     `json:"productid"`
+	Productid string     `json:"productid"`
 }
 
 // SimpleChaincode example simple Chaincode implementation
