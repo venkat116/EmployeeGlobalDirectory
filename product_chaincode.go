@@ -139,7 +139,7 @@ func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []st
 		Name:   args[0],
 		Amount: amt,
 		Owner: args[2],
-		ProductId: args[3],
+		Productid: args[3],
 	}
 
 	bytes, err := json.Marshal(product)
