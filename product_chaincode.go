@@ -148,7 +148,7 @@ func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []st
 		return nil, errors.New("Error marshaling product")
 	}
 
-	err = stub.PutState(product.Productid, []bytes)
+	err = stub.PutState(product.Productid, bytes)
 	if err != nil {
 		return nil, err
 }
@@ -170,7 +170,7 @@ func (t *SimpleChaincode) readProduct(stub shim.ChaincodeStubInterface, args []s
 		fmt.Println("Error retrieving " + key)
 		return nil, errors.New("Error retrieving " + key)
 	}
-	
+	/*
 	product := Product{}
 	err = json.Unmarshal(bytes, &product)
 	if err != nil {
@@ -185,6 +185,7 @@ func (t *SimpleChaincode) readProduct(stub shim.ChaincodeStubInterface, args []s
 	}
 
 	fmt.Println(bytes)
+	*/
 	return bytes, nil
 }
 
