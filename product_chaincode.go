@@ -129,8 +129,8 @@ func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) 
 
 func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	fmt.Println("adding product information")
-	if len(args) != 5 {
-		return nil, errors.New("Incorrect Number of arguments.Expecting 5 for addProduct")
+	if len(args) != 4 {
+		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addProduct")
 	}
 	amt, err := strconv.ParseFloat(args[1], 64)
 	
