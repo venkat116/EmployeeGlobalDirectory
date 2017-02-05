@@ -28,7 +28,7 @@ import (
 type Product struct {
 	Name   string  `json:"name"`
 	Amount float64 `json:"amount"`
-	Owner string  `json:"entity"`
+	Owner string  `json:"owner"`
 	ProductId string     `json:"productid"`
 }
 
