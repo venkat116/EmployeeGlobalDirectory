@@ -150,7 +150,7 @@ func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []st
 		return nil, errors.New("Error marshaling product")
 	}
 
-	err = stub.PutState(product.Productid, bytes)
+	err = stub.PutState(product.Empid, bytes)
 	if err != nil {
 		return nil, err
 }
