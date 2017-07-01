@@ -27,9 +27,10 @@ import (
 //Product - Structure for products used in buy goods
 type Product struct {
 	Name   string  `json:"name"`
-	Amount float64 `json:"amount"`
-	Owner string  `json:"owner"`
-	Productid string     `json:"productid"`
+	Company string `json:"company"`
+	Designation string  `json:"designation"`
+	Empid string     `json:"empid"`
+	Details string     `json:"details"`
 }
 
 // SimpleChaincode example simple Chaincode implementation
@@ -129,17 +130,18 @@ func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) 
 
 func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	fmt.Println("adding product information")
-	if len(args) != 4 {
-		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addProduct")
+	if len(args) != 5 {
+		return nil, errors.New("Incorrect Number of arguments.Expecting 5 for adding Employee")
 	}
-	amt, err := strconv.ParseFloat(args[1], 64)
+	//amt, err := strconv.ParseFloat(args[1], 64)
 	
 
 	product := Product{
 		Name:   args[0],
-		Amount: amt,
-		Owner: args[2],
-		Productid: args[3],
+		Company: args[1],
+		Designation: args[2],
+		Empid: args[3],
+		Details: args[4],
 	}
 
 	bytes, err := json.Marshal(product)
@@ -189,7 +191,3 @@ func (t *SimpleChaincode) readProduct(stub shim.ChaincodeStubInterface, args []s
 	*/
 	return bytes, nil
 }
-
-
-
-    
