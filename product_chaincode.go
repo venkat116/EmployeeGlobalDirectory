@@ -24,8 +24,8 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
-//Product - Structure for products used in buy goods
-type Product struct {
+//Employer - Structure for Employer details
+type Employer struct {
 	Name   string  `json:"name"`
 	Company string `json:"company"`
 	Designation string  `json:"designation"`
@@ -67,8 +67,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.Init(stub, "init", args)
 	} else if function == "write" {
 		return t.write(stub, args)
-	} else if function == "addproduct" {
-		return t.addProduct(stub, args)
+	} else if function == "addemployer" {
+		return t.addEmployer(stub, args)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
@@ -82,8 +82,8 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "read" { //read a variable
 		return t.read(stub, args)
-	} else if function == "readproduct" {
-		return t.readProduct(stub, args)
+	} else if function == "reademployer" {
+		return t.readEmployer(stub, args)
 	}
 	fmt.Println("query did not find func: " + function)
 
@@ -128,15 +128,15 @@ func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) 
 	return valAsbytes, nil
 }
 
-func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	fmt.Println("adding product information")
+func (t *SimpleChaincode) addEmployer(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	fmt.Println("adding employer information")
 	if len(args) != 5 {
 		return nil, errors.New("Incorrect Number of arguments.Expecting 5 for adding Employee")
 	}
 	//amt, err := strconv.ParseFloat(args[1], 64)
 	
 
-	product := Product{
+	employer := Employer{
 		Name:   args[0],
 		Company: args[1],
 		Designation: args[2],
@@ -144,20 +144,20 @@ func (t *SimpleChaincode) addProduct(stub shim.ChaincodeStubInterface, args []st
 		Details: args[4],
 	}
 
-	bytes, err := json.Marshal(product)
+	bytes, err := json.Marshal(employer)
 	if err != nil {
-		fmt.Println("Error marshaling product")
-		return nil, errors.New("Error marshaling product")
+		fmt.Println("Error marshaling employer")
+		return nil, errors.New("Error marshaling employer")
 	}
 
-	err = stub.PutState(product.Empid, bytes)
+	err = stub.PutState(employer.Empid, bytes)
 	if err != nil {
 		return nil, err
 }
 return nil, nil
 }
 
-func (t *SimpleChaincode) readProduct(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readEmployer(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	fmt.Println("read() is running")
 
 	if len(args) != 1 {
