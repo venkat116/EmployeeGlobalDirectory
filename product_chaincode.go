@@ -174,17 +174,17 @@ func (t *SimpleChaincode) readEmployer(stub shim.ChaincodeStubInterface, args []
 		return nil, errors.New("Error retrieving " + key)
 	}
 	/*
-	product := Product{}
-	err = json.Unmarshal(bytes, &product)
+	employer := Employer{}
+	err = json.Unmarshal(bytes, &employer)
 	if err != nil {
-		fmt.Println("Error Unmarshaling customerBytes")
-		return nil, errors.New("Error Unmarshaling customerBytes")
+		fmt.Println("Error Unmarshaling EmployerBytes")
+		return nil, errors.New("Error Unmarshaling EmployerBytes")
 	}
 	
-	bytes, err = json.Marshal(product)
+	bytes, err = json.Marshal(employer)
 	if err != nil {
-		fmt.Println("Error marshaling customer")
-		return nil, errors.New("Error marshaling customer")
+		fmt.Println("Error marshaling Employer")
+		return nil, errors.New("Error marshaling Employer")
 	}
 
 	fmt.Println(bytes)
