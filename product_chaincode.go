@@ -1,6 +1,8 @@
 
 /*
-Coded by Venkat
+Employee Information
+Block Chain Sample Demo Application
+Author: Venkat
 */
 
 package main
