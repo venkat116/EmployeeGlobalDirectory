@@ -70,14 +70,6 @@ type V5C_Holder struct {
 	V5Cs 	[]string `json:"v5cs"`
 }
 
-//employee code
-/*type Emp struct {
-	EID   string  `json:"EID"`
-	Name string `json:"Name"`
-	Cmp string  `json:"Cmp"`
-	Detl string `json:"Detl"`
-}*/
-
 //==============================================================================================================================
 //	User_and_eCert - Struct for storing the JSON of a user and their ecert
 //==============================================================================================================================
@@ -90,7 +82,6 @@ type User_and_eCert struct {
 //==============================================================================================================================
 //	Init Function - Called when the user deploys the chaincode
 //==============================================================================================================================
-
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
 	//Args
@@ -111,21 +102,6 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 	return nil, nil
 }
-/*func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
-	}
-
-	err := stub.PutState("hello_world", []byte(args[0]))
-	if err != nil {
-		return nil, err
-	}
-	for i:=0; i < len(args); i=i+2 {
-		t.add_ecert(stub, args[i], args[i+1])
-	}
-	return nil, nil
-}*/
-
 
 //==============================================================================================================================
 //	 General Functions
@@ -256,7 +232,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 
 	if function == "create_vehicle" {
-        return t.create_vehicle(stub, caller, caller_affiliation, args)
+        return t.create_vehicle(stub, caller, caller_affiliation, args[0])
 	} else if function == "ping" {
         return t.ping(stub)
     } else { 																				// If the function is not a create then there must be a car so we need to retrieve the car.
@@ -339,14 +315,14 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 //	 Create Vehicle - Creates the initial JSON for the vehcile and then saves it to the ledger.
 //=================================================================================================================================
-func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, v5cID []string) ([]byte, error) {
+func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, v5cID string) ([]byte, error) {
 	var v Vehicle
 
-	v5c_ID         := "\"v5cID\":\""+v5cID[0]+"\", "							// Variables to define the JSON
+	v5c_ID         := "\"v5cID\":\""+v5cID+"\", "							// Variables to define the JSON
 	vin            := "\"VIN\":0, "
-	make           := "\"Make\":\""+v5cID[1]+"\", "
-	model          := "\"Model\":\""+v5cID[2]+"\", "
-	reg            := "\"Reg\":\""+v5cID[3]+"\", "
+	make           := "\"Make\":\"UNDEFINED\", "
+	model          := "\"Model\":\"UNDEFINED\", "
+	reg            := "\"Reg\":\"UNDEFINED\", "
 	owner          := "\"Owner\":\""+caller+"\", "
 	colour         := "\"Colour\":\"UNDEFINED\", "
 	leaseContract  := "\"LeaseContractID\":\"UNDEFINED\", "
@@ -355,7 +331,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 
 	vehicle_json := "{"+v5c_ID+vin+make+model+reg+owner+colour+leaseContract+status+scrapped+"}" 	// Concatenates the variables to create the total JSON object
 
-	matched, err := regexp.Match("^[A-z][A-z][0-9]{7}", []byte(v5cID[0]))  				// matched = true if the v5cID passed fits format of two letters followed by seven digits
+	matched, err := regexp.Match("^[A-z][A-z][0-9]{7}", []byte(v5cID))  				// matched = true if the v5cID passed fits format of two letters followed by seven digits
 
 												if err != nil { fmt.Printf("CREATE_VEHICLE: Invalid v5cID: %s", err); return nil, errors.New("Invalid v5cID") }
 
@@ -393,7 +369,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 
 																		if err != nil {	return nil, errors.New("Corrupt V5C_Holder record") }
 
-	v5cIDs.V5Cs = append(v5cIDs.V5Cs, v5cID[0])
+	v5cIDs.V5Cs = append(v5cIDs.V5Cs, v5cID)
 
 
 	bytes, err = json.Marshal(v5cIDs)
@@ -407,40 +383,6 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 	return nil, nil
 
 }
-
-//=================================================================================================================================
-//	 Create Function
-//=================================================================================================================================
-//	 Create Emp - Creates the initial JSON for the Emp and then saves it to the ledger.
-//=================================================================================================================================
-
-/*func (t *SimpleChaincode) addEmp(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, args []string) ([]byte, error) {
-	fmt.Println("adding product information")
-	if len(args) != 4 {
-		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addProduct")
-	}
-	
-	
-
-	emp := Emp{
-		EID:  args[0],
-		Name: args[1],
-		Cmp: args[2],
-		Detl: args[3],
-	}
-
-	bytes, err := json.Marshal(emp)
-	if err != nil {
-		fmt.Println("Error marshaling product")
-		return nil, errors.New("Error marshaling product")
-	}
-
-	err = stub.PutState(emp.EID, bytes)
-	if err != nil {
-		return nil, err
-}
-return nil, nil
-}*/
 
 //=================================================================================================================================
 //	 Transfer Functions
