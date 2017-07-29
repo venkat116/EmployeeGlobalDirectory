@@ -232,7 +232,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 
 	if function == "create_vehicle" {
-        return t.create_vehicle(stub, caller, caller_affiliation, args[0])
+        return t.create_vehicle(stub, caller, caller_affiliation, args)
 	} else if function == "ping" {
         return t.ping(stub)
     } else { 																				// If the function is not a create then there must be a car so we need to retrieve the car.
@@ -315,14 +315,14 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 //	 Create Vehicle - Creates the initial JSON for the vehcile and then saves it to the ledger.
 //=================================================================================================================================
-func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, v5cID string) ([]byte, error) {
+func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, args []string) ([]byte, error) {
 	var v Vehicle
 
-	v5c_ID         := "\"v5cID\":\""+v5cID+"\", "							// Variables to define the JSON
+	v5c_ID         := "\"v5cID\":\""+args[0]+"\", "							// Variables to define the JSON
 	vin            := "\"VIN\":0, "
-	make           := "\"Make\":\"UNDEFINED\", "
-	model          := "\"Model\":\"UNDEFINED\", "
-	reg            := "\"Reg\":\"UNDEFINED\", "
+	make           := "\"Make\":\""+args[1]+"\", "
+	model          := "\"Model\":\""+args[2]+"\", "
+	reg            := "\"Reg\":\""+args[3]+"\", "
 	owner          := "\"Owner\":\""+caller+"\", "
 	colour         := "\"Colour\":\"UNDEFINED\", "
 	leaseContract  := "\"LeaseContractID\":\"UNDEFINED\", "
@@ -331,7 +331,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 
 	vehicle_json := "{"+v5c_ID+vin+make+model+reg+owner+colour+leaseContract+status+scrapped+"}" 	// Concatenates the variables to create the total JSON object
 
-	matched, err := regexp.Match("^[A-z][A-z][0-9]{7}", []byte(v5cID))  				// matched = true if the v5cID passed fits format of two letters followed by seven digits
+	matched, err := regexp.Match("^[A-z][A-z][0-9]{7}", []byte(args[0]))  				// matched = true if the v5cID passed fits format of two letters followed by seven digits
 
 												if err != nil { fmt.Printf("CREATE_VEHICLE: Invalid v5cID: %s", err); return nil, errors.New("Invalid v5cID") }
 
@@ -369,7 +369,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 
 																		if err != nil {	return nil, errors.New("Corrupt V5C_Holder record") }
 
-	v5cIDs.V5Cs = append(v5cIDs.V5Cs, v5cID)
+	v5cIDs.V5Cs = append(v5cIDs.V5Cs, args[0])
 
 
 	bytes, err = json.Marshal(v5cIDs)
