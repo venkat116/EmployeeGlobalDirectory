@@ -416,7 +416,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 //	 Create Emp - Creates the initial JSON for the Emp and then saves it to the ledger.
 //=================================================================================================================================
 
-func (t *SimpleChaincode) addEmp(stub shim.ChaincodeStubInterface,, caller string, caller_affiliation string, args []string) ([]byte, error) {
+func (t *SimpleChaincode) addEmp(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, args []string) ([]byte, error) {
 	fmt.Println("adding product information")
 	if len(args) != 4 {
 		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addProduct")
