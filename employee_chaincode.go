@@ -75,7 +75,7 @@ type Emp struct {
 	EID   string  `json:"EID"`
 	Name string `json:"Name"`
 	Cmp string  `json:"Cmp"`
-	detl string     `json:"detl"`
+	Detl string `json:"Detl"`
 }
 
 //==============================================================================================================================
