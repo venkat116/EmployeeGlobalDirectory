@@ -346,9 +346,9 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 
 	v5c_ID         := "\"v5cID\":\""+v5cID[0]+"\", "							// Variables to define the JSON
 	vin            := "\"VIN\":0, "
-	make           := "\"Make\":\"UNDEFINED\", "
-	model          := "\"Model\":\"UNDEFINED\", "
-	reg            := "\"Reg\":\"UNDEFINED\", "
+	make           := "\"Make\":\""+v5cID[1]+"\", "
+	model          := "\"Model\":\""+v5cID[2]+"\", "
+	reg            := "\"Reg\":\""+v5cID[3]+"\", "
 	owner          := "\"Owner\":\""+caller+"\", "
 	colour         := "\"Colour\":\"UNDEFINED\", "
 	leaseContract  := "\"LeaseContractID\":\"UNDEFINED\", "
