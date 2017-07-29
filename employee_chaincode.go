@@ -71,12 +71,12 @@ type V5C_Holder struct {
 }
 
 //employee code
-type Emp struct {
+/*type Emp struct {
 	EID   string  `json:"EID"`
 	Name string `json:"Name"`
 	Cmp string  `json:"Cmp"`
 	Detl string `json:"Detl"`
-}
+}*/
 
 //==============================================================================================================================
 //	User_and_eCert - Struct for storing the JSON of a user and their ecert
@@ -257,8 +257,6 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	if function == "create_vehicle" {
         return t.create_vehicle(stub, caller, caller_affiliation, args)
-	} else if function == "addemp" {
-		return t.addEmp(stub,caller, caller_affiliation, args)
 	} else if function == "ping" {
         return t.ping(stub)
     } else { 																				// If the function is not a create then there must be a car so we need to retrieve the car.
@@ -416,7 +414,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 //	 Create Emp - Creates the initial JSON for the Emp and then saves it to the ledger.
 //=================================================================================================================================
 
-func (t *SimpleChaincode) addEmp(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, args []string) ([]byte, error) {
+/*func (t *SimpleChaincode) addEmp(stub shim.ChaincodeStubInterface, caller string, caller_affiliation string, args []string) ([]byte, error) {
 	fmt.Println("adding product information")
 	if len(args) != 4 {
 		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addProduct")
@@ -442,7 +440,7 @@ func (t *SimpleChaincode) addEmp(stub shim.ChaincodeStubInterface, caller string
 		return nil, err
 }
 return nil, nil
-}
+}*/
 
 //=================================================================================================================================
 //	 Transfer Functions
