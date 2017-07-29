@@ -395,7 +395,7 @@ func (t *SimpleChaincode) create_vehicle(stub shim.ChaincodeStubInterface, calle
 
 																		if err != nil {	return nil, errors.New("Corrupt V5C_Holder record") }
 
-	v5cIDs.V5Cs = append(v5cIDs.V5Cs, v5cID)
+	v5cIDs.V5Cs = append(v5cIDs.V5Cs, v5cID[0])
 
 
 	bytes, err = json.Marshal(v5cIDs)
